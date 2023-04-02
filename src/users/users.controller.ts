@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, UseGuards, Param } from '@nestjs/common';
+import { Controller, Post, Body, Get, UseGuards, Param, Delete } from '@nestjs/common';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger/dist';
 import { ApiTags } from '@nestjs/swagger/dist/decorators/api-use-tags.decorator';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
@@ -26,7 +26,7 @@ export class UsersController {
 
     @ApiOperation({summary: "Получить всех пользователей"})
     @ApiResponse({status: 200, type: [User]})
-     @Roles("ADMIN")
+    @Roles("ADMIN")
     @UseGuards(RolesGuard)
     @Get()
     getAll() {
@@ -52,4 +52,12 @@ export class UsersController {
     }
 
 
+    @Roles("ADMIN")
+    @UseGuards(RolesGuard)
+    @ApiOperation({summary: "Удаление пользователя"})
+    @ApiResponse({status: 200})
+    @Delete(':id')
+    async deleteUser(@Param('id') id: number): Promise<void> {
+       return await this.usersService.deleteUser(id);
+  }
 }   

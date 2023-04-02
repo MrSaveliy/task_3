@@ -1,4 +1,4 @@
-import { CanActivate, ExecutionContext, Injectable, UnauthorizedException, HttpException, HttpStatus } from "@nestjs/common";
+import { CanActivate, ExecutionContext, Injectable, HttpException, HttpStatus } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
 import { JwtService } from "@nestjs/jwt";
 import { Observable } from "rxjs";
