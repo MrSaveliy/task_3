@@ -52,8 +52,15 @@ export class UsersService {
         await user.save();
         return user;
     }
-
     
+    async deleteUser(id: number): Promise<void> {
+        const user = await this.userRepositoriy.findByPk(id);
+        if (!user) {
+          throw new Error('User not found');
+        }
+    
+        await user.destroy();
+      }
 
 
 
