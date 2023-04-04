@@ -4,13 +4,18 @@ import { CreateTextblockDto } from './dto/create-textblock.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { RolesGuard } from 'src/auth/roles.guard';
 import { Roles } from 'src/auth/role-auth.decorator';
+import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { User } from 'src/users/user.model';
 
 
 @Controller('roles')
 export class TextblockController {
     constructor(private textblockService: TextblockService) {}
 
-    
+    @ApiOperation({summary: "Создание текстого блока"})
+    @ApiResponse({status: 200, type: [User]})
+    @Roles("ADMIN")
+    @UseGuards(RolesGuard)
     @Post()
     @UseInterceptors(FileInterceptor('picture'))
     createTextblock(@Body() dto: CreateTextblockDto, @UploadedFile() picture) {
